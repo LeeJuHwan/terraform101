@@ -13,3 +13,14 @@ public_subnets = {
   }
 
 }
+
+private_subnets = {
+  "oimarket-apne2-private-subnet-b" = {
+    availability_zone = "ap-northeast-2b"
+    cidr_block = "10.0.11.0/24"
+  },
+  "oimarket-apne2-private-subnet-a" = {
+    availability_zone = "ap-northeast-2a"
+    cidr_block = "10.0.2.0/24"
+  }
+}
