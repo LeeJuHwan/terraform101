@@ -22,3 +22,47 @@ subnets = {
     nat_gateway_subnet = "oimarket-apne2-public-subnet-b"
   },
 }
+
+security_groups = {
+  "oimarket-apne2-permit-ssh-security-group" = {
+    ingress_rules = [
+      {
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port   = 22
+        protocol    = "tcp"
+        to_port     = 22
+      }
+    ]
+
+    egress_rules = [{
+      cidr_blocks = ["0.0.0.0/0"]
+      from_port   = 0
+      protocol    = "-1"
+      to_port     = 0
+    }]
+  },
+
+  "oimarket-apne2-permit-http-security-group" = {
+    ingress_rules = [
+      {
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port   = 80
+        protocol    = "tcp"
+        to_port     = 80
+      },
+      {
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port   = 443
+        protocol    = "https"
+        to_port     = 443
+      }
+    ]
+
+    egress_rules = [{
+      cidr_blocks = ["0.0.0.0/0"]
+      from_port   = 0
+      protocol    = "-1"
+      to_port     = 0
+    }]
+  }
+}
