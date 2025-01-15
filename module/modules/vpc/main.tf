@@ -100,5 +100,4 @@ resource "aws_security_group" "groups" {
   tags = {
     Name : each.key
   }
-
 }
