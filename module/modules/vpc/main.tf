@@ -34,16 +34,16 @@ resource "aws_subnet" "subnets" {
   }
 }
 
-resource "aws_eip" "nat_ips" {
-  for_each = local.private_subnets
-}
+# resource "aws_eip" "nat_ips" {
+#   for_each = local.private_subnets
+# }
 
-resource "aws_nat_gateway" "gateways" {
-  for_each = local.private_subnets
+# resource "aws_nat_gateway" "gateways" {
+#   for_each = local.private_subnets
 
-  allocation_id = aws_eip.nat_ips[each.key].id
-  subnet_id     = aws_subnet.subnets[each.value.nat_gateway_subnet].id
-}
+#   allocation_id = aws_eip.nat_ips[each.key].id
+#   subnet_id     = aws_subnet.subnets[each.value.nat_gateway_subnet].id
+# }
 
 resource "aws_route_table" "route_tables" {
   for_each = var.subnets
@@ -60,8 +60,10 @@ resource "aws_route" "routes" {
   route_table_id         = aws_route_table.route_tables[each.key].id
   destination_cidr_block = "0.0.0.0/0"
 
-  gateway_id     = lookup(each.value, "nat_gateway_subnet", null) == null ? aws_internet_gateway.main.id : null
-  nat_gateway_id = lookup(each.value, "nat_gateway_subnet", null) != null ? aws_nat_gateway.gateways[each.key].id : null
+  gateway_id = aws_internet_gateway.main.id
+  # gateway_id = lookup(each.value, "nat_gateway_subnet", null) == null ? aws_internet_gateway.main.id : null
+  # nat_gateway_id = lookup(each.value, "nat_gateway_subnet", null) != null ? aws_nat_gateway.gateways[each.key].id : null
+
 }
 
 resource "aws_route_table_association" "associations" {
