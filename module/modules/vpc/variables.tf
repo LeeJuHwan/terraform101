@@ -6,11 +6,6 @@ variable "vpc_name" {
   description = "The name of vpc"
 }
 
-variable "availability_zones" {
-  type        = list(string)
-  description = "az of subnets"
-}
-
 variable "subnets" {
   type = map(object({
     availability_zone  = string
@@ -22,19 +17,26 @@ variable "subnets" {
 variable "security_groups" {
   description = "Map of security groups with rules"
 
-  type = map(object({
-    ingress_rules = list(object({
-      from_port   = number
-      to_port     = number
-      protocol    = string
-      cidr_blocks = list(string)
-    }))
-    egress_rules = list(object({
-      from_port   = number
-      to_port     = number
-      protocol    = string
-      cidr_blocks = list(string)
-    }))
-  }))
+  type = map(object({}))
 
+}
+
+variable "ingress_rules" {
+  type = map(object({
+    security_group_name = string
+    cidr_ipv4           = string
+    from_port           = optional(number)
+    ip_protocol         = string
+    to_port             = optional(number)
+  }))
+}
+
+variable "egress_rules" {
+  type = map(object({
+    security_group_name = string
+    cidr_ipv4           = string
+    from_port           = optional(number)
+    ip_protocol         = string
+    to_port             = optional(number)
+  }))
 }
