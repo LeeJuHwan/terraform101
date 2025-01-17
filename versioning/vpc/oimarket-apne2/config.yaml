@@ -1,0 +1,48 @@
+vpc_name: "oimarket-apne2"
+cidr_block: "10.0.0.0/16"
+subnets: 
+  oimarket-apne2-public-subnet-a:
+    availability_zone: "ap-northeast-2a"
+    cidr_block: "10.0.1.0/24"
+  oimarket-apne2-public-subnet-b:
+    availability_zone: "ap-northeast-2b"
+    cidr_block: "10.0.2.0/24"
+  oimarket-apne2-private-subnet-a:
+    availability_zone: "ap-northeast-2a"
+    cidr_block: "10.0.11.0/24"
+    nat_gateway_subnet: "oimarket-apne2-public-subnet-a"
+  oimarket-apne2-private-subnet-b:
+    availability_zone: "ap-northeast-2b"
+    cidr_block: "10.0.12.0/24"
+    nat_gateway_subnet: "oimarket-apne2-public-subnet-b"
+security_groups:
+  oimarket-apne2-permit-http-security-group: null
+  oimarket-apne2-permit-ssh-security-group: null
+ingress_rules:
+  oimarket-apne2-permit-http-security-group-allow-80:
+    security_group_name: "oimarket-apne2-permit-http-security-group"
+    cidr_ipv4: "0.0.0.0/0"
+    from_port: 80
+    ip_protocol: "tcp"
+    to_port: 80
+  oimarket-apne2-permit-http-security-group-allow-443:
+    security_group_name: "oimarket-apne2-permit-http-security-group"
+    cidr_ipv4: "0.0.0.0/0"
+    from_port: 443
+    ip_protocol: "tcp"
+    to_port: 443
+  oimarket-apne2-permit-ssh-security-group-allow-22:
+    security_group_name: "oimarket-apne2-permit-ssh-security-group"
+    cidr_ipv4: "0.0.0.0/0"
+    from_port: 22
+    ip_protocol: "tcp"
+    to_port: 22
+egress_rules:
+  oimarket-apne2-permit-http-security-group-allow-permit:
+    security_group_name: "oimarket-apne2-permit-http-security-group"
+    cidr_ipv4: "0.0.0.0/0"
+    ip_protocol: "-1"
+  oimarket-apne2-permit-ssh-security-group-allow-permit:
+    security_group_name: "oimarket-apne2-permit-ssh-security-group"
+    cidr_ipv4: "0.0.0.0/0"
+    ip_protocol: "-1"
